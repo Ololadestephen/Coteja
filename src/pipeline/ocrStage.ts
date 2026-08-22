@@ -1,7 +1,7 @@
 import { loadModel, ocr, unloadModel } from '@qvac/sdk'
 import type { DossierManifest } from '../types/documents.js'
 import { OCR_MODEL_SRC, LOW_OCR_CONFIDENCE_THRESHOLD } from '../config.js'
-import { sortReadingOrder } from './textAssembly.js'
+import { mergeBlocksIntoLines } from './textAssembly.js'
 import type { OcrBlock } from '../types/ocr.js'
 
 interface RawOcrBlockLike {
@@ -62,7 +62,7 @@ export async function runOcrStage(
           }
         }
       }
-      blocksByDocId.set(doc.docId, sortReadingOrder(blocks))
+      blocksByDocId.set(doc.docId, mergeBlocksIntoLines(blocks))
     }
   } finally {
     await unloadModel({ modelId, clearStorage: false })

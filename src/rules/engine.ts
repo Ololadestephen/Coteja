@@ -70,11 +70,28 @@ export function normalizeName(value: string): string {
   return value.toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
 }
 
+function compactName(value: string): string {
+  return value.toLowerCase().replace(/[^a-z0-9]/g, '')
+}
+
 export function namesMatch(a: string, b: string): boolean {
   const na = normalizeName(a)
   const nb = normalizeName(b)
   if (na.length === 0 || nb.length === 0) return false
-  return na === nb || na.includes(nb) || nb.includes(na)
+  if (na === nb || na.includes(nb) || nb.includes(na)) return true
+  const ca = compactName(a)
+  const cb = compactName(b)
+  if (ca.length >= 4 && cb.length >= 4 && ca === cb) return true
+
+  const tokensA = new Set(na.split(' ').filter((t) => t.length >= 2))
+  const tokensB = new Set(nb.split(' ').filter((t) => t.length >= 2))
+  if (tokensA.size === 0 || tokensB.size === 0) return false
+  const [smaller, larger] =
+    tokensA.size <= tokensB.size ? [tokensA, tokensB] : [tokensB, tokensA]
+  for (const token of smaller) {
+    if (!larger.has(token)) return false
+  }
+  return true
 }
 
 export function numbersClose(a: number, b: number, epsilon: number): boolean {

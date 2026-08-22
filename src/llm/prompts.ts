@@ -15,6 +15,7 @@ Rules:
 - Numbers are JSON numbers, never strings: write 252600.00 or 1200, not "252600.00" or "1200".
 - Dates use YYYY-MM-DD. Currency uses its 3-letter code (USD, EUR, ARS...).
 - If a value is not in the document, omit that optional field entirely. Never invent values and never emit empty fields.
+- lineItems contains ONLY goods lines from the document's Items section. Each "Item N ..." block is exactly one item. Never treat totals, grand totals, package counts or summary lines as items.
 - Output exactly one JSON object and nothing else. No markdown, no explanations.`
 
 const FIELD_SHAPE = '{"value": ..., "quote": "...", "ref": [blockNumbers]}'

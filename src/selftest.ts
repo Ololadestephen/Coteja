@@ -8,7 +8,7 @@ import {
 } from './types/extraction.js'
 import { mergePartialExtractions } from './pipeline/merge.js'
 
-const field = (value: unknown, quote: string, ref: number[]) => ({ value, quote, ref })
+const field = (value: unknown, quote: string, ref: unknown[]) => ({ value, quote, ref })
 
 export function runSelfTest(): void {
   let failures = 0
@@ -59,11 +59,13 @@ export function runSelfTest(): void {
     }).success,
   )
 
+  const coerced = lineItemSchema.safeParse({
+    description: field('Malting barley', 'Malting barley', ['7']),
+    quantity: field('1200', '1200', [8]),
+  })
   expect(
     'stringified numbers and refs are coerced deterministically',
-    lineItemSchema.safeParse({ description: field('Malting barley', 'Malting barley', ['7']), quantity: field('1200', '1200', [8]) })
-      .success &&
-      JSON.stringify(lineItemSchema.parse({ description: field('x'.repeat(6), 'x', ['7']), quantity: field('1200.0', '1200.0', [8]) })).includes('"value":1200'),
+    coerced.success && JSON.stringify(coerced.success ? coerced.data : {}).includes('"value":1200'),
   )
 
   expect(

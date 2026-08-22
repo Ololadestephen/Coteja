@@ -25,7 +25,12 @@ export function normalizeModelObject(input: unknown): unknown {
   const out: Record<string, unknown> = {}
   for (const [key, raw] of Object.entries(obj)) {
     const normalized = normalizeModelObject(raw)
-    if (isFieldLike(normalized as Record<string, unknown>)) {
+    if (
+      normalized !== null &&
+      typeof normalized === 'object' &&
+      !Array.isArray(normalized) &&
+      isFieldLike(normalized as Record<string, unknown>)
+    ) {
       const field = normalized as Record<string, unknown>
       if (isEmptyish(field.value) && isEmptyish(field.quote)) {
         continue
