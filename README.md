@@ -29,17 +29,18 @@ PASS / DISCREPANCY / NEEDS HUMAN REVIEW  +  injection flags  +  reliability stat
 
 | Capability | API | Model | Where |
 |---|---|---|---|
-| OCR | `ocr()` via `@qvac/sdk` | `OCR_LATIN` (CRAFT detector + recognizer) | `src/pipeline/ocrStage.ts` |
-| Text generation | `completion()` + `loadModel()` (temp 0, seeded, `reasoning_budget: 0`) | `QWEN3_4B_INST_Q4_K_M` | `src/llm/load.ts`, `src/llm/prompts.ts` |
+| OCR | `ocr()` via `@qvac/sdk` | `OCR_LATIN` (CRAFT detector + recognizer) | [`runOcrStage()`](https://github.com/Ololadestephen/Coteja/blob/main/src/pipeline/ocrStage.ts#L35) |
+| Text generation | `completion()` + `loadModel()` (temp 0, seeded, `reasoning_budget: 0`) | `QWEN3_4B_INST_Q4_K_M` | [`loadLlm()`](https://github.com/Ololadestephen/Coteja/blob/main/src/llm/load.ts#L15) · [`extractAndValidateChunk()`](https://github.com/Ololadestephen/Coteja/blob/main/src/llm/prompts.ts#L106) |
 
-**Integration permalinks** (judges: start here):
+**Integration permalinks** (judges: start here — every place inference happens):
 
-- OCR stage — blocks with bbox/confidence, line-grouping merge: `src/pipeline/ocrStage.ts` + `src/pipeline/textAssembly.ts`
-- Extraction prompts, Zod validation and single repair loop: `src/llm/prompts.ts`
-- Model load config (ctx 8192, reasoning off): `src/llm/load.ts`, `src/config.ts`
-- Deterministic rule engine (six rules, pure functions): `src/rules/engine.ts`
-- Evidence lock (findings without citations get downgraded): `src/pipeline/evidenceStage.ts`
-- Prompt-injection quarantine scan: `src/guard/injectionScan.ts`
+- QVAC OCR stage (`ocr()`, bbox + confidence capture): [src/pipeline/ocrStage.ts L35](https://github.com/Ololadestephen/Coteja/blob/main/src/pipeline/ocrStage.ts#L35)
+- OCR line-grouping merge (reading-order reconstruction): [src/pipeline/textAssembly.ts L29](https://github.com/Ololadestephen/Coteja/blob/main/src/pipeline/textAssembly.ts#L29)
+- Local model load — ctx 8192, reasoning disabled ([src/llm/load.ts L15](https://github.com/Ololadestephen/Coteja/blob/main/src/llm/load.ts#L15))
+- Extraction prompt, Zod validation and single-repair loop: [src/llm/prompts.ts L106](https://github.com/Ololadestephen/Coteja/blob/main/src/llm/prompts.ts#L106)
+- Deterministic rule registry (six rules, zero model access): [src/pipeline/controlsStage.ts L12](https://github.com/Ololadestephen/Coteja/blob/main/src/pipeline/controlsStage.ts#L12)
+- Evidence lock — unevidenced findings are downgraded to human review: [src/pipeline/evidenceStage.ts L8](https://github.com/Ololadestephen/Coteja/blob/main/src/pipeline/evidenceStage.ts#L8)
+- Prompt-injection quarantine scan (cross-block): [src/guard/injectionScan.ts L11](https://github.com/Ololadestephen/Coteja/blob/main/src/guard/injectionScan.ts#L11)
 
 ## Model & hardware
 
