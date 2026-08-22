@@ -195,15 +195,25 @@ export async function extractAndValidateChunk(
 
 export function looseParseJsonObject(text: string): Record<string, unknown> | null {
   const fenced = text.match(/```(?:json)?\s*([\s\S]*?)```/)
-  const candidate = fenced ? fenced[1] : text
+  const candidate = fenced ? (fenced[1] ?? '') : text
+
+  for (const parsed of balancedJsonObjects(candidate)) {
+    if (
+      parsed !== null &&
+      typeof parsed === 'object' &&
+      !Array.isArray(parsed)
+    ) {
+      return parsed as Record<string, unknown>
+    }
+  }
+
   const start = candidate.indexOf('{')
   const end = candidate.lastIndexOf('}')
   if (start === -1 || end === -1 || end <= start) {
     return null
   }
-  const slice = candidate.slice(start, end + 1)
   try {
-    const parsed: unknown = JSON.parse(slice)
+    const parsed: unknown = JSON.parse(candidate.slice(start, end + 1))
     if (parsed !== null && typeof parsed === 'object' && !Array.isArray(parsed)) {
       return parsed as Record<string, unknown>
     }
@@ -211,6 +221,49 @@ export function looseParseJsonObject(text: string): Record<string, unknown> | nu
   } catch {
     return null
   }
+}
+
+function balancedJsonObjects(text: string): unknown[] {
+  const results: unknown[] = []
+  let depth = 0
+  let inString = false
+  let escaped = false
+  let objectStart = -1
+  for (let i = 0; i < text.length; i++) {
+    const ch = text[i]
+    if (inString) {
+      if (escaped) {
+        escaped = false
+      } else if (ch === '\\') {
+        escaped = true
+      } else if (ch === '"') {
+        inString = false
+      }
+      continue
+    }
+    if (ch === '"') {
+      inString = true
+      continue
+    }
+    if (ch === '{') {
+      if (depth === 0) objectStart = i
+      depth += 1
+      continue
+    }
+    if (ch === '}') {
+      depth -= 1
+      if (depth === 0 && objectStart >= 0) {
+        try {
+          results.push(JSON.parse(text.slice(objectStart, i + 1)))
+        } catch {
+          // skip unparseable candidate
+        }
+        objectStart = -1
+      }
+      if (depth < 0) depth = 0
+    }
+  }
+  return results
 }
 
 function summarizeZodError(error: z.ZodError): string {
