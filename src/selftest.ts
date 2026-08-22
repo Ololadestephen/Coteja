@@ -60,9 +60,15 @@ export function runSelfTest(): void {
   )
 
   expect(
-    'field with empty refs rejected',
-    !lineItemSchema.safeParse({ description: field('x'.repeat(6), 'x', []), quantity: field(1, '1', []) })
-      .success,
+    'stringified numbers and refs are coerced deterministically',
+    lineItemSchema.safeParse({ description: field('Malting barley', 'Malting barley', ['7']), quantity: field('1200', '1200', [8]) })
+      .success &&
+      JSON.stringify(lineItemSchema.parse({ description: field('x'.repeat(6), 'x', ['7']), quantity: field('1200.0', '1200.0', [8]) })).includes('"value":1200'),
+  )
+
+  expect(
+    'field with empty refs accepted by schema (evidence lock downgrades later)',
+    lineItemSchema.safeParse({ description: field('x'.repeat(6), 'x', []), quantity: field(1, '1', []) }).success,
   )
 
   expect(

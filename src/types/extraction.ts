@@ -9,13 +9,13 @@ export interface Provenance {
 const fieldOf = <T extends z.ZodTypeAny>(value: T) =>
   z.object({
     value,
-    quote: z.string().min(1),
-    ref: z.array(z.number().int().nonnegative()).min(1),
+    quote: z.string(),
+    ref: z.array(z.coerce.number().int().nonnegative()),
   })
 
 const isoDate = z.string().regex(/^\d{4}-\d{2}-\d{2}$/, 'must be YYYY-MM-DD')
 const currencyCode = z.string().regex(/^[A-Za-z]{3}$/, 'must be a 3-letter currency code')
-const amount = z.number().nonnegative()
+const amount = z.coerce.number().nonnegative()
 
 export const lineItemSchema = z.object({
   description: fieldOf(z.string()),

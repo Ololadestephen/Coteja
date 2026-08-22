@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { completeOnce } from './load.js'
 import { schemaForDocType } from '../types/extraction.js'
+import { normalizeModelObject } from '../pipeline/modelOutput.js'
 import type { CompletionOutcome } from './load.js'
 import type { DocType } from '../types/documents.js'
 
@@ -10,9 +11,10 @@ Rules:
 - Use ONLY information present in the numbered blocks.
 - Every extracted field is an object: {"value": <the value>, "quote": <exact substring copied from a block>, "ref": [<block numbers>]}.
 - quote MUST be copied character-for-character from one of the blocks.
-- ref lists the block numbers the value came from (the [N] prefixes).
-- Dates use YYYY-MM-DD. Currency uses its 3-letter code (USD, EUR, ARS...). Amounts are plain numbers without thousand separators.
-- If a value is not in the document, omit that optional field. Never invent values.
+- ref lists the block numbers the value came from (the [N] prefixes). Integers only, e.g. [3] not ["3"].
+- Numbers are JSON numbers, never strings: write 252600.00 or 1200, not "252600.00" or "1200".
+- Dates use YYYY-MM-DD. Currency uses its 3-letter code (USD, EUR, ARS...).
+- If a value is not in the document, omit that optional field entirely. Never invent values and never emit empty fields.
 - Output exactly one JSON object and nothing else. No markdown, no explanations.`
 
 const FIELD_SHAPE = '{"value": ..., "quote": "...", "ref": [blockNumbers]}'
@@ -111,7 +113,7 @@ export async function extractAndValidateChunk(
     EXTRACTION_SYSTEM_PROMPT,
     userPrompt,
   )
-  const firstParsed = looseParseJsonObject(first.text)
+  const firstParsed = asObject(normalizeModelObject(looseParseJsonObject(first.text)))
   if (firstParsed !== null) {
     const check = schema.safeParse(firstParsed)
     if (check.success) {
@@ -128,7 +130,7 @@ export async function extractAndValidateChunk(
       EXTRACTION_SYSTEM_PROMPT,
       buildRepairUserPrompt(docType, first.text, summarizeZodError(check.error)),
     )
-    const repairedParsed = looseParseJsonObject(repaired.text)
+    const repairedParsed = asObject(normalizeModelObject(looseParseJsonObject(repaired.text)))
     if (repairedParsed !== null) {
       const secondCheck = schema.safeParse(repairedParsed)
       if (secondCheck.success) {
@@ -161,7 +163,7 @@ export async function extractAndValidateChunk(
     EXTRACTION_SYSTEM_PROMPT,
     buildRepairUserPrompt(docType, first.text, 'output was not parseable as a JSON object'),
   )
-  const recoveredParsed = looseParseJsonObject(recovered.text)
+  const recoveredParsed = asObject(normalizeModelObject(looseParseJsonObject(recovered.text)))
   if (recoveredParsed !== null) {
     const check = schema.safeParse(recoveredParsed)
     if (check.success) {
@@ -215,4 +217,11 @@ function summarizeZodError(error: z.ZodError): string {
     .slice(0, 8)
     .map((issue) => `${issue.path.join('.') || '(root)'}: ${issue.message}`)
     .join('; ')
+}
+
+function asObject(value: unknown): Record<string, unknown> | null {
+  if (value !== null && typeof value === 'object' && !Array.isArray(value)) {
+    return value as Record<string, unknown>
+  }
+  return null
 }
