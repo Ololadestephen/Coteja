@@ -1,6 +1,6 @@
-import { QWEN3_1_7B_INST_Q4, OCR_LATIN } from '@qvac/sdk'
+import { QWEN3_4B_INST_Q4_K_M, OCR_LATIN } from '@qvac/sdk'
 
-export const LLM_MODEL_SRC = QWEN3_1_7B_INST_Q4
+export const LLM_MODEL_SRC = QWEN3_4B_INST_Q4_K_M
 export const OCR_MODEL_SRC = OCR_LATIN
 
 export const LLM_CTX_SIZE = 8192
@@ -13,6 +13,6 @@ export const ARITHMETIC_EPSILON = 0.01
 export const QUANTITY_TOLERANCE = 0
 export const MAX_CHUNK_CHARS = 3600
 
-export const MODEL_LABEL = 'QWEN3_1_7B_INST_Q4'
+export const MODEL_LABEL = 'QWEN3_4B_INST_Q4_K_M'
 export const MODEL_QUANTIZATION = 'Q4'
 export const OCR_LABEL = 'OCR_LATIN (CRAFT + recognizer)'

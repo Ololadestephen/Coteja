@@ -53,7 +53,7 @@ export function baseFinding(
   evidenceItems: Finding['evidence'],
   calculation?: string,
 ): Finding {
-  const provenance: ProvenanceTag[] = ['ocr:OCR_LATIN', 'extraction:QWEN3_1_7B_INST_Q4', 'deterministic:typescript']
+  const provenance: ProvenanceTag[] = ['ocr:OCR_LATIN', 'extraction:QWEN3_4B_INST_Q4_K_M', 'deterministic:typescript']
   return {
     id: nextFindingId(ruleId),
     ruleId,
