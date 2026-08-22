@@ -1,0 +1,22 @@
+{
+  "name": "coteja",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Coteja — offline trade-finance document checker. Local AI extraction, deterministic verification, evidence-linked discrepancy packets.",
+  "scripts": {
+    "typecheck": "tsc --noEmit",
+    "coteja": "tsx src/index.ts",
+    "bench": "tsx src/index.ts --bench 5",
+    "report": "tsx scripts/makeReport.ts"
+  },
+  "dependencies": {
+    "@qvac/sdk": "0.17.1",
+    "zod": "^3.24.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.0",
+    "tsx": "^4.19.0",
+    "typescript": "^5.7.0"
+  }
+}

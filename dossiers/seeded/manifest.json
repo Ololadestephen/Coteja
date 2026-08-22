@@ -1,0 +1,9 @@
+{
+  "dossierId": "seeded-quantity-currency",
+  "docs": [
+    { "docId": "lc", "type": "letter_of_credit", "imagePaths": ["lc.png"] },
+    { "docId": "invoice", "type": "commercial_invoice", "imagePaths": ["invoice.png"] },
+    { "docId": "packing-list", "type": "packing_list", "imagePaths": ["packing-list.png"] },
+    { "docId": "bol", "type": "bill_of_lading", "imagePaths": ["bol.png"] }
+  ]
+}

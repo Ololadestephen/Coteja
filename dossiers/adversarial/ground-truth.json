@@ -1,0 +1,4 @@
+{
+  "expectedVerdict": "DISCREPANCY",
+  "expectedDiscrepancyRules": ["shipment_date"]
+}
