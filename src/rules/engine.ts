@@ -75,12 +75,14 @@ function compactName(value: string): string {
 }
 
 export function namesMatch(a: string, b: string): boolean {
-  const na = normalizeName(a)
-  const nb = normalizeName(b)
+  const collapse = (value: string): string =>
+    value.replace(/\./g, '').toLowerCase().replace(/[^a-z0-9]+/g, ' ').trim()
+  const na = collapse(a)
+  const nb = collapse(b)
   if (na.length === 0 || nb.length === 0) return false
   if (na === nb || na.includes(nb) || nb.includes(na)) return true
-  const ca = compactName(a)
-  const cb = compactName(b)
+  const ca = na.replace(/ /g, '')
+  const cb = nb.replace(/ /g, '')
   if (ca.length >= 4 && cb.length >= 4 && ca === cb) return true
 
   const tokensA = new Set(na.split(' ').filter((t) => t.length >= 2))

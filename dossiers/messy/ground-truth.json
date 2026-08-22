@@ -1,0 +1,4 @@
+{
+  "expectedVerdict": "DISCREPANCY",
+  "expectedDiscrepancyRules": ["quantity_mismatch"]
+}
