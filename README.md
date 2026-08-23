@@ -36,19 +36,19 @@ PASS / DISCREPANCY / NEEDS HUMAN REVIEW + audit flags + measured timings
 
 | Capability | API | Model | Integration |
 |---|---|---|---|
-| OCR | `ocr()` through `@qvac/sdk` | `OCR_LATIN` (CRAFT + recognizer) | [`runOcrStage()`](https://github.com/Ololadestephen/Coteja/blob/main/src/pipeline/ocrStage.ts#L35) |
-| Text generation | `loadModel()` + `completion()` | `QWEN3_4B_INST_Q4_K_M` | [`loadLlm()`](https://github.com/Ololadestephen/Coteja/blob/main/src/llm/load.ts#L15) · [`extractAndValidateChunk()`](https://github.com/Ololadestephen/Coteja/blob/main/src/llm/prompts.ts#L109) |
+| OCR | `ocr()` through `@qvac/sdk` | `OCR_LATIN` (CRAFT + recognizer) | [`runOcrStage()`](https://github.com/Ololadestephen/Coteja/blob/968b1ba8cc0437b65d6e0d122d0e261b6c4eaf34/src/pipeline/ocrStage.ts#L35) |
+| Text generation | `loadModel()` + `completion()` | `QWEN3_4B_INST_Q4_K_M` | [`loadLlm()`](https://github.com/Ololadestephen/Coteja/blob/968b1ba8cc0437b65d6e0d122d0e261b6c4eaf34/src/llm/load.ts#L15) · [`extractAndValidateChunk()`](https://github.com/Ololadestephen/Coteja/blob/968b1ba8cc0437b65d6e0d122d0e261b6c4eaf34/src/llm/prompts.ts#L109) |
 
 **Judge permalinks — start here:**
 
-- QVAC OCR and optional bbox/confidence capture: [src/pipeline/ocrStage.ts L35](https://github.com/Ololadestephen/Coteja/blob/main/src/pipeline/ocrStage.ts#L35)
-- OCR reading-order reconstruction: [src/pipeline/textAssembly.ts L29](https://github.com/Ololadestephen/Coteja/blob/main/src/pipeline/textAssembly.ts#L29)
-- Local model load with ctx 8192 and reasoning disabled: [src/llm/load.ts L15](https://github.com/Ololadestephen/Coteja/blob/main/src/llm/load.ts#L15)
-- Extraction, schema validation and source-aware repair: [src/llm/prompts.ts L109](https://github.com/Ololadestephen/Coteja/blob/main/src/llm/prompts.ts#L109)
-- Cross-block injection detection and pre-extraction redaction: [src/guard/injectionScan.ts L11](https://github.com/Ololadestephen/Coteja/blob/main/src/guard/injectionScan.ts#L11) · [L63](https://github.com/Ololadestephen/Coteja/blob/main/src/guard/injectionScan.ts#L63)
-- Exact source-quote grounding: [src/pipeline/grounding.ts L27](https://github.com/Ololadestephen/Coteja/blob/main/src/pipeline/grounding.ts#L27)
-- Six deterministic rules with no model access: [src/pipeline/controlsStage.ts L12](https://github.com/Ololadestephen/Coteja/blob/main/src/pipeline/controlsStage.ts#L12)
-- Evidence lock and human-review downgrade: [src/pipeline/evidenceStage.ts L8](https://github.com/Ololadestephen/Coteja/blob/main/src/pipeline/evidenceStage.ts#L8)
+- QVAC OCR and optional bbox/confidence capture: [src/pipeline/ocrStage.ts L35](https://github.com/Ololadestephen/Coteja/blob/968b1ba8cc0437b65d6e0d122d0e261b6c4eaf34/src/pipeline/ocrStage.ts#L35)
+- OCR reading-order reconstruction: [src/pipeline/textAssembly.ts L29](https://github.com/Ololadestephen/Coteja/blob/968b1ba8cc0437b65d6e0d122d0e261b6c4eaf34/src/pipeline/textAssembly.ts#L29)
+- Local model load with ctx 8192 and reasoning disabled: [src/llm/load.ts L15](https://github.com/Ololadestephen/Coteja/blob/968b1ba8cc0437b65d6e0d122d0e261b6c4eaf34/src/llm/load.ts#L15)
+- Extraction, schema validation and source-aware repair: [src/llm/prompts.ts L109](https://github.com/Ololadestephen/Coteja/blob/968b1ba8cc0437b65d6e0d122d0e261b6c4eaf34/src/llm/prompts.ts#L109)
+- Cross-block injection detection and pre-extraction redaction: [src/guard/injectionScan.ts L11](https://github.com/Ololadestephen/Coteja/blob/968b1ba8cc0437b65d6e0d122d0e261b6c4eaf34/src/guard/injectionScan.ts#L11) · [L63](https://github.com/Ololadestephen/Coteja/blob/968b1ba8cc0437b65d6e0d122d0e261b6c4eaf34/src/guard/injectionScan.ts#L63)
+- Exact source-quote grounding: [src/pipeline/grounding.ts L27](https://github.com/Ololadestephen/Coteja/blob/968b1ba8cc0437b65d6e0d122d0e261b6c4eaf34/src/pipeline/grounding.ts#L27)
+- Six deterministic rules with no model access: [src/pipeline/controlsStage.ts L12](https://github.com/Ololadestephen/Coteja/blob/968b1ba8cc0437b65d6e0d122d0e261b6c4eaf34/src/pipeline/controlsStage.ts#L12)
+- Evidence lock and human-review downgrade: [src/pipeline/evidenceStage.ts L8](https://github.com/Ololadestephen/Coteja/blob/968b1ba8cc0437b65d6e0d122d0e261b6c4eaf34/src/pipeline/evidenceStage.ts#L8)
 
 ## Model, hardware and latency
 
