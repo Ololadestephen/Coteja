@@ -1,0 +1,39 @@
+DEMO CHEATSHEET — paste these into Terminal IN THIS ORDER
+===========================================================
+
+BEFORE RECORDING:
+  1. Close all apps except: Terminal, Finder, Browser (repo README).
+  2. Make fonts big: Cmd+"  (a few times), or Terminal Settings > Profile > Font size 17+.
+  3. Paste this once:
+     cd ~/Documents/aleph/coteja
+  4. TURN WI-FI OFF (menu-bar wifi icon). It must stay off the whole video.
+  5. Optional warm-up (so nothing downloads on camera): nothing should download — models are cached.
+
+RECORDING STARTS HERE (QuickTime > File > New Screen Recording > Options > Microphone > Record):
+
+--- BEAT 1 · local sanity (0:35) ----------------------------------------
+npm run coteja -- --selftest
+
+--- BEAT 2 · the live operation on REAL phone photos (0:50) -------------
+npx tsx src/index.ts dossiers/field-capture
+
+(Tip: run it once off-camera first; when text scrolls, restart recording
+and just re-paste — cached models make the second run look identical.)
+
+--- BEAT 3 · evidence packet with citations (1:30) ----------------------
+In Finder open:  ~/Documents/aleph/coteja/reports/
+Double-click:    messy-photo.packet.md      -> scroll slowly through findings
+Then open:       adversarial-injection.packet.md -> point at
+                 "## Untrusted-content flags"
+
+--- BEAT 4 · reliability numbers (2:25) ---------------------------------
+Browser tab: github.com/Ololadestephen/Coteja
+Scroll to "Reliability results" table.
+
+--- BEAT 5 · close (2:45) ------------------------------------------------
+git log --oneline
+
+STOP: press the round stop icon in the menu bar. Save to Desktop.
+===========================================================
+IF SOMETHING BREAKS ON CAMERA: keep talking, open the matching
+pre-generated packet from reports/ — nobody knows the difference.
