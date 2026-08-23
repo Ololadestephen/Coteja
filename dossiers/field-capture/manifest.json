@@ -1,0 +1,9 @@
+{
+  "dossierId": "field-capture",
+  "docs": [
+    { "docId": "lc", "type": "letter_of_credit", "imagePaths": ["lc.jpg"] },
+    { "docId": "invoice", "type": "commercial_invoice", "imagePaths": ["invoice.jpg"] },
+    { "docId": "packing-list", "type": "packing_list", "imagePaths": ["packing-list.jpg"] },
+    { "docId": "bol", "type": "bill_of_lading", "imagePaths": ["bol.jpg"] }
+  ]
+}
