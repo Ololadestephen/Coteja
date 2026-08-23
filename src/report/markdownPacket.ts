@@ -16,7 +16,7 @@ export function renderMarkdownPacket(packet: EvidencePacket): string {
     lines.push('## ⚠️ Untrusted-content flags')
     for (const flag of packet.injectionFlags) {
       lines.push(
-        `- \`${flag.matchedPattern}\` in ${flag.docId} p${flag.page} (block ${flag.blockIndex}): “…${flag.excerpt}…” — treated as document data, never as instructions.`,
+        `- \`${flag.matchedPattern}\` in ${flag.docId} p${flag.page} (block ${flag.blockIndex}): “…${flag.excerpt}…” — redacted before local-model extraction and retained as an audit flag.`,
       )
     }
     lines.push('')
@@ -56,7 +56,7 @@ export function renderMarkdownPacket(packet: EvidencePacket): string {
     `- docs checked: ${packet.stats.docsChecked} · extraction repairs: ${packet.stats.repairsUsed} · human-review items: ${packet.stats.humanReviews}`,
   )
   lines.push('')
-  lines.push('_Every finding above cites its source text; the model does not get to decide whether its own answer is trustworthy._')
+  lines.push('_Every discrepancy above carries resolvable source evidence and a deterministic comparison; otherwise it is human review._')
   return lines.join('\n')
 }
 
@@ -81,5 +81,6 @@ function renderFinding(finding: Finding): string[] {
     lines.push(`- ${source.docId} p${source.page}${conf}${box}: “${source.quote}”`)
   }
   lines.push(`provenance: ${finding.provenance.join(' → ')}`)
+  lines.push('')
   return lines
 }

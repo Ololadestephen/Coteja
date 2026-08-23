@@ -7,7 +7,7 @@ export interface DossierRunMetrics {
   verdictCorrect: boolean
   precision: number | null
   recall: number | null
-  unsupportedClaimRate: number
+  unexpectedRuleRate: number
   humanReviews: number
   ruleFailures: number
   totalMs: number
@@ -33,7 +33,7 @@ export function scorePacket(
       verdictCorrect: false,
       precision: null,
       recall: null,
-      unsupportedClaimRate: 0,
+      unexpectedRuleRate: 0,
       humanReviews: packet.stats.humanReviews,
       ruleFailures,
       totalMs: packet.timings.total,
@@ -52,7 +52,7 @@ export function scorePacket(
     verdictCorrect: packet.verdict === groundTruth.expectedVerdict,
     precision: safeDiv(tp, tp + fp),
     recall: safeDiv(tp, tp + fn),
-    unsupportedClaimRate: discrepancies.length === 0 ? 0 : fp / discrepancies.length,
+    unexpectedRuleRate: discrepancies.length === 0 ? 0 : fp / discrepancies.length,
     humanReviews: packet.stats.humanReviews,
     ruleFailures,
     totalMs: packet.timings.total,

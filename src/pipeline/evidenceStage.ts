@@ -18,6 +18,9 @@ export function applyEvidenceLock(findings: readonly Finding[]): EvidenceLockRes
     if (finding.status === 'DISCREPANCY' && (finding.calculation === undefined || finding.calculation.trim().length === 0)) {
       problems.push('missing deterministic calculation or comparison')
     }
+    if (finding.status === 'DISCREPANCY' && finding.evidence.some((source) => source.lowConfidence)) {
+      problems.push('one or more source citations have low OCR confidence')
+    }
     if (problems.length === 0) return finding
     if (finding.status === 'DISCREPANCY') {
       downgradedCount += 1

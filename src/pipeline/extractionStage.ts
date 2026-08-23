@@ -4,6 +4,7 @@ import { mergePartialExtractions, wrapExtractedDocument } from './merge.js'
 import type { OcrBlock } from '../types/ocr.js'
 import type { DocType } from '../types/documents.js'
 import type { ExtractionOutcome } from '../types/extraction.js'
+import { validateExtractedFieldsGrounding } from './grounding.js'
 
 export interface ExtractionStageResult {
   outcomesByDocId: Map<string, ExtractionOutcome>
@@ -31,11 +32,12 @@ export async function runExtractionStage(
     }
     const validPartials: unknown[] = []
     let lastError: string | null = null
+    let failedChunks = 0
     for (const chunk of chunks) {
       const outcome = await extractAndValidateChunk(
         modelId,
         doc.type,
-        buildExtractionUserPrompt(doc.type, chunk.lines.length, chunk.lines),
+        buildExtractionUserPrompt(doc.type, chunk.lines),
       )
       if (outcome.tokensPerSecondSample !== undefined) {
         tokensPerSecond.push(outcome.tokensPerSecondSample)
@@ -46,8 +48,17 @@ export async function runExtractionStage(
       if (outcome.ok && outcome.value !== undefined) {
         validPartials.push(outcome.value)
       } else {
+        failedChunks += 1
         lastError = outcome.error ?? 'unknown extraction failure'
       }
+    }
+    if (failedChunks > 0) {
+      outcomesByDocId.set(docId, {
+        docId,
+        status: 'needs_human_review',
+        reason: `one or more extraction chunks failed validation: ${lastError ?? 'unknown failure'}`,
+      })
+      continue
     }
     if (validPartials.length === 0) {
       outcomesByDocId.set(docId, {
@@ -64,6 +75,18 @@ export async function runExtractionStage(
         docId,
         status: 'needs_human_review',
         reason: `merged extraction failed schema validation: ${lastError ?? 'unknown'}`,
+      })
+      continue
+    }
+    const groundingIssues = validateExtractedFieldsGrounding(wrapped.fields, doc.blocks)
+    if (groundingIssues.length > 0) {
+      outcomesByDocId.set(docId, {
+        docId,
+        status: 'needs_human_review',
+        reason: `extracted quote grounding failed: ${groundingIssues
+          .slice(0, 3)
+          .map((issue) => `${issue.path}: ${issue.reason}`)
+          .join('; ')}`,
       })
       continue
     }

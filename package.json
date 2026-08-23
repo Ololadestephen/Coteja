@@ -7,7 +7,7 @@
   "scripts": {
     "typecheck": "tsc --noEmit",
     "coteja": "tsx src/index.ts",
-    "bench": "tsx src/index.ts --bench 5",
+    "bench": "tsx src/index.ts --bench",
     "report": "tsx scripts/makeReport.ts"
   },
   "dependencies": {

@@ -67,7 +67,9 @@ async function main(): Promise<void> {
 
   const dossierDir = args[0]
   process.stdout.write('▸ Coteja starting — all inference will run locally\n')
-  const packet = await cotejaRun(dossierDir)
+  const packet = await cotejaRun(dossierDir, (message) => {
+    process.stdout.write(`▸ ${message}\n`)
+  })
   const markdown = renderMarkdownPacket(packet)
 
   mkdirSync(outDir, { recursive: true })

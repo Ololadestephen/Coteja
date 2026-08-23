@@ -63,7 +63,6 @@ const SHAPE_INSTRUCTIONS: Record<DocType, string> = {
 
 export function buildExtractionUserPrompt(
   docType: DocType,
-  chunkLineCount: number,
   numberedBlocks: readonly string[],
 ): string {
   return [
@@ -73,11 +72,12 @@ export function buildExtractionUserPrompt(
     ...numberedBlocks,
     '',
     'Remember: output exactly one JSON object, nothing else.',
-  ].join('\n').slice(0, Math.max(numberedBlocks.join('\n').length + 800, chunkLineCount * 40))
+  ].join('\n')
 }
 
 export function buildRepairUserPrompt(
   docType: DocType,
+  sourcePrompt: string,
   previousOutput: string,
   validationError: string,
 ): string {
@@ -86,6 +86,9 @@ export function buildRepairUserPrompt(
     '',
     'Validation error:',
     validationError,
+    '',
+    'Original requested shape and numbered OCR blocks:',
+    sourcePrompt,
     '',
     'Your previous answer:',
     previousOutput.slice(0, 2000),
@@ -129,7 +132,7 @@ export async function extractAndValidateChunk(
     const repaired: CompletionOutcome = await completeOnce(
       modelId,
       EXTRACTION_SYSTEM_PROMPT,
-      buildRepairUserPrompt(docType, first.text, summarizeZodError(check.error)),
+      buildRepairUserPrompt(docType, userPrompt, first.text, summarizeZodError(check.error)),
     )
     const repairedParsed = asObject(normalizeModelObject(looseParseJsonObject(repaired.text)))
     if (repairedParsed !== null) {
@@ -162,7 +165,7 @@ export async function extractAndValidateChunk(
   const recovered = await completeOnce(
     modelId,
     EXTRACTION_SYSTEM_PROMPT,
-    buildRepairUserPrompt(docType, first.text, 'output was not parseable as a JSON object'),
+    buildRepairUserPrompt(docType, userPrompt, first.text, 'output was not parseable as a JSON object'),
   )
   const recoveredParsed = asObject(normalizeModelObject(looseParseJsonObject(recovered.text)))
   if (recoveredParsed !== null) {

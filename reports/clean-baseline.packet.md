@@ -11,4 +11,4 @@ No discrepancies and no review items. All deterministic checks passed.
 - median local generation speed: 15.8 tok/s over 4 calls
 - docs checked: 4 · extraction repairs: 0 · human-review items: 0
 
-_Every finding above cites its source text; the model does not get to decide whether its own answer is trustworthy._
+_Every discrepancy above carries resolvable source evidence and a deterministic comparison; otherwise it is human review._

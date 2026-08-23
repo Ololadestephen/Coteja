@@ -9,7 +9,7 @@ export interface InjectionFlag {
   page: number
   matchedPattern: string
   excerpt: string
-  action: 'quarantined'
+  action: 'redacted_before_extraction'
 }
 
 export const INJECTION_PATTERNS: readonly InjectionPattern[] = [

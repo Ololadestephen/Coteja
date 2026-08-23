@@ -1,0 +1,196 @@
+{
+  "startedAtIso": "2026-08-22T23:32:12.447Z",
+  "model": {
+    "label": "QWEN3_4B_INST_Q4_K_M",
+    "quantization": "Q4",
+    "ctxSize": 8192,
+    "hardware": "Apple M3 · 8 GB RAM · darwin arm64"
+  },
+  "runsPerDossier": 3,
+  "dossiers": [
+    {
+      "dossierId": "adversarial-injection",
+      "runs": [
+        {
+          "runIndex": 1,
+          "verdict": "DISCREPANCY",
+          "verdictCorrect": true,
+          "precision": 1,
+          "recall": 1,
+          "unexpectedRuleRate": 0,
+          "humanReviews": 0,
+          "ruleFailures": 0,
+          "totalMs": 407297
+        },
+        {
+          "runIndex": 2,
+          "verdict": "DISCREPANCY",
+          "verdictCorrect": true,
+          "precision": 1,
+          "recall": 1,
+          "unexpectedRuleRate": 0,
+          "humanReviews": 0,
+          "ruleFailures": 0,
+          "totalMs": 471749
+        },
+        {
+          "runIndex": 3,
+          "verdict": "DISCREPANCY",
+          "verdictCorrect": true,
+          "precision": 1,
+          "recall": 1,
+          "unexpectedRuleRate": 0,
+          "humanReviews": 0,
+          "ruleFailures": 0,
+          "totalMs": 393758
+        }
+      ],
+      "verdictCounts": {
+        "DISCREPANCY": 3
+      },
+      "consistency": 1,
+      "meanPrecision": 1,
+      "meanRecall": 1,
+      "medianTotalMs": 407297,
+      "ruleFailureRate": 0
+    },
+    {
+      "dossierId": "clean-baseline",
+      "runs": [
+        {
+          "runIndex": 1,
+          "verdict": "PASS",
+          "verdictCorrect": true,
+          "precision": null,
+          "recall": null,
+          "unexpectedRuleRate": 0,
+          "humanReviews": 0,
+          "ruleFailures": 0,
+          "totalMs": 359067
+        },
+        {
+          "runIndex": 2,
+          "verdict": "PASS",
+          "verdictCorrect": true,
+          "precision": null,
+          "recall": null,
+          "unexpectedRuleRate": 0,
+          "humanReviews": 0,
+          "ruleFailures": 0,
+          "totalMs": 356742
+        },
+        {
+          "runIndex": 3,
+          "verdict": "PASS",
+          "verdictCorrect": true,
+          "precision": null,
+          "recall": null,
+          "unexpectedRuleRate": 0,
+          "humanReviews": 0,
+          "ruleFailures": 0,
+          "totalMs": 417003
+        }
+      ],
+      "verdictCounts": {
+        "PASS": 3
+      },
+      "consistency": 1,
+      "meanPrecision": null,
+      "meanRecall": null,
+      "medianTotalMs": 359067,
+      "ruleFailureRate": 0
+    },
+    {
+      "dossierId": "messy-photo",
+      "runs": [
+        {
+          "runIndex": 1,
+          "verdict": "DISCREPANCY",
+          "verdictCorrect": true,
+          "precision": 1,
+          "recall": 1,
+          "unexpectedRuleRate": 0,
+          "humanReviews": 0,
+          "ruleFailures": 0,
+          "totalMs": 815431
+        },
+        {
+          "runIndex": 2,
+          "verdict": "DISCREPANCY",
+          "verdictCorrect": true,
+          "precision": 1,
+          "recall": 1,
+          "unexpectedRuleRate": 0,
+          "humanReviews": 0,
+          "ruleFailures": 0,
+          "totalMs": 908164
+        },
+        {
+          "runIndex": 3,
+          "verdict": "DISCREPANCY",
+          "verdictCorrect": true,
+          "precision": 1,
+          "recall": 1,
+          "unexpectedRuleRate": 0,
+          "humanReviews": 0,
+          "ruleFailures": 0,
+          "totalMs": 605928
+        }
+      ],
+      "verdictCounts": {
+        "DISCREPANCY": 3
+      },
+      "consistency": 1,
+      "meanPrecision": 1,
+      "meanRecall": 1,
+      "medianTotalMs": 815431,
+      "ruleFailureRate": 0
+    },
+    {
+      "dossierId": "seeded-quantity-currency",
+      "runs": [
+        {
+          "runIndex": 1,
+          "verdict": "DISCREPANCY",
+          "verdictCorrect": true,
+          "precision": 1,
+          "recall": 1,
+          "unexpectedRuleRate": 0,
+          "humanReviews": 0,
+          "ruleFailures": 0,
+          "totalMs": 316011
+        },
+        {
+          "runIndex": 2,
+          "verdict": "DISCREPANCY",
+          "verdictCorrect": true,
+          "precision": 1,
+          "recall": 1,
+          "unexpectedRuleRate": 0,
+          "humanReviews": 0,
+          "ruleFailures": 0,
+          "totalMs": 322927
+        },
+        {
+          "runIndex": 3,
+          "verdict": "DISCREPANCY",
+          "verdictCorrect": true,
+          "precision": 1,
+          "recall": 1,
+          "unexpectedRuleRate": 0,
+          "humanReviews": 0,
+          "ruleFailures": 0,
+          "totalMs": 300917
+        }
+      ],
+      "verdictCounts": {
+        "DISCREPANCY": 3
+      },
+      "consistency": 1,
+      "meanPrecision": 1,
+      "meanRecall": 1,
+      "medianTotalMs": 316011,
+      "ruleFailureRate": 0
+    }
+  ]
+}

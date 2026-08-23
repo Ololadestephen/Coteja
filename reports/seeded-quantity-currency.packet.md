@@ -19,9 +19,10 @@ check: `distinct currencies found: USD, EUR`
 - lc p1 · OCR confidence 77.2% · bbox [85, 499, 680, 543]: “Currency and amount: USD 252600.00”
 - invoice p1 · OCR confidence 99.8% · bbox [85, 399, 322, 444]: “Currency: EUR”
 provenance: ocr:OCR_LATIN → extraction:QWEN3_4B_INST_Q4_K_M → deterministic:typescript
+
 ## Reliability
 - stages (ms): ocr 200795 · extraction 111966 · controls 4 · evidence lock 0
 - median local generation speed: 15.6 tok/s over 4 calls
 - docs checked: 4 · extraction repairs: 0 · human-review items: 0
 
-_Every finding above cites its source text; the model does not get to decide whether its own answer is trustworthy._
+_Every discrepancy above carries resolvable source evidence and a deterministic comparison; otherwise it is human review._
