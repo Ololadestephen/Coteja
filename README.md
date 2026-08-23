@@ -82,7 +82,7 @@ Requirements: macOS arm64 (Metal), 8 GB+ RAM, Node 20+. First run downloads ~1.2
 
 ## Honest limitations
 
-- Synthetic test documents only; no real transactions.
+- Self-generated trade documents (no real customer data); the field-capture variant consists of genuine phone-camera photos of these documents displayed on screen — Coteja passes them end-to-end.
 - Six rules cover structural mismatches, not UCP 600 legal compliance.
 - Final decisions always remain with a human operator; Coteja's HUMAN_REVIEW path is a feature, not a fallback.
 - Small-model extraction is imperfect by design; the evidence lock quarantines anything it cannot verify.
