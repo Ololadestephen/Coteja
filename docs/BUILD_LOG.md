@@ -46,7 +46,7 @@ Implemented deterministic coercion, normalization, line grouping, balanced JSON 
 - Expanded model-free self-tests from 8 to 12 and corrected README/demo claims.
 - Added the raw benchmark artifact and an MIT license.
 - Re-ran the adversarial dossier end to end: two OCR blocks redacted before extraction; expected shipment-date discrepancy retained; zero repairs and zero human-review items.
-- Re-ran the exact messy-photo demo dossier after hardening: expected quantity discrepancy retained with grounded citations, zero repairs and zero human-review items in about 8.2 minutes.
+- Re-ran the exact messy-photo demo dossier after hardening: expected quantity discrepancy retained with grounded citations, zero repairs and zero human-review items in just over 9 minutes.
 - Verified a clean copied checkout with `npm ci`, TypeScript compilation and all 12 self-tests.
 
 ## Honest notes

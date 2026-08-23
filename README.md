@@ -47,7 +47,7 @@ PASS / DISCREPANCY / NEEDS HUMAN REVIEW + audit flags + measured timings
 - Extraction, schema validation and source-aware repair: [src/llm/prompts.ts L109](https://github.com/Ololadestephen/Coteja/blob/main/src/llm/prompts.ts#L109)
 - Cross-block injection detection and pre-extraction redaction: [src/guard/injectionScan.ts L11](https://github.com/Ololadestephen/Coteja/blob/main/src/guard/injectionScan.ts#L11) · [L63](https://github.com/Ololadestephen/Coteja/blob/main/src/guard/injectionScan.ts#L63)
 - Exact source-quote grounding: [src/pipeline/grounding.ts L27](https://github.com/Ololadestephen/Coteja/blob/main/src/pipeline/grounding.ts#L27)
-- Six deterministic rules with no model access: [src/pipeline/controlsStage.ts L26](https://github.com/Ololadestephen/Coteja/blob/main/src/pipeline/controlsStage.ts#L26)
+- Six deterministic rules with no model access: [src/pipeline/controlsStage.ts L12](https://github.com/Ololadestephen/Coteja/blob/main/src/pipeline/controlsStage.ts#L12)
 - Evidence lock and human-review downgrade: [src/pipeline/evidenceStage.ts L8](https://github.com/Ololadestephen/Coteja/blob/main/src/pipeline/evidenceStage.ts#L8)
 
 ## Model, hardware and latency
@@ -80,7 +80,7 @@ Run it with `npm run bench -- 3`.
 
 After the final redaction and grounding hardening, an additional adversarial end-to-end run again produced the expected `DISCREPANCY`, with two pre-extraction redaction flags, grounded date evidence, zero repairs and zero human-review items.
 
-The final hardened messy-photo run also produced its expected quantity `DISCREPANCY` with grounded evidence, zero repairs and zero human-review items in about 8.2 minutes. Its generated packet is tracked at [`reports/messy-photo.packet.md`](reports/messy-photo.packet.md).
+The final hardened messy-photo run also produced its expected quantity `DISCREPANCY` with grounded evidence, zero repairs and zero human-review items in just over 9 minutes. Its generated packet is tracked at [`reports/messy-photo.packet.md`](reports/messy-photo.packet.md).
 
 A separate field-capture dossier uses genuine phone-camera photographs of the same synthetic documents displayed on screen. Its recorded end-to-end run produced `PASS` in about 7.5 minutes.
 
